@@ -11,6 +11,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  final _questionAnswers = const [
+    {
+      'questionText': 'what do you prefer out of these fruits ?',
+      'options': ['apple', 'orange', 'grapes', 'pineapple']
+    },
+    {
+      'questionText': 'what do you prefer  out of these cars?',
+      'options': ['Benz', 'BMW', 'Lamborghini', 'Audi']
+    },
+    {
+      'questionText': 'what do you prefer out of these countries ?',
+      'options': ['USA', 'UK', 'France', 'Germany', 'Australia']
+    }
+  ];
 
   void setCurrentQuestionIndex() {
     setState(() {
@@ -21,36 +35,25 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var _questionAnswers = [
-      {
-        'questionText': 'what do you prefer out of these fruits ?',
-        'options': ['apple', 'orange', 'grapes', 'pineapple']
-      },
-      {
-        'questionText': 'what do you prefer  out of these cars?',
-        'options': ['Benz', 'BMW', 'Lamborghini', 'Audi']
-      },
-      {
-        'questionText': 'what do you prefer out of these countries ?',
-        'options': ['USA', 'UK', 'France', 'Germany', 'Australia']
-      }
-    ];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Question Answer App'),
         ),
-        body: Column(
-          children: [
-            Question(
-                _questionAnswers[_questionIndex]['questionText'].toString()),
-            ...(_questionAnswers[_questionIndex]['options'] as List)
-                .map((answer) {
-              return Answer(answer, setCurrentQuestionIndex);
-            })
-          ],
-        ),
+        body: _questionIndex < _questionAnswers.length
+            ? Column(
+                children: [
+                  Question(_questionAnswers[_questionIndex]['questionText']
+                      as String),
+                  ...(_questionAnswers[_questionIndex]['options'] as List)
+                      .map((answer) {
+                    return Answer(answer, setCurrentQuestionIndex);
+                  })
+                ],
+              )
+            : Center(
+                child: Text('all qustions are completed'),
+              ),
       ),
     );
   }
