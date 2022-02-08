@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/answer.dart';
-import 'package:flutter_complete_guide/question.dart';
+import 'package:flutter_complete_guide/quiz.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,16 +40,7 @@ class _MyAppState extends State<MyApp> {
           title: Text('Question Answer App'),
         ),
         body: _questionIndex < _questionAnswers.length
-            ? Column(
-                children: [
-                  Question(_questionAnswers[_questionIndex]['questionText']
-                      as String),
-                  ...(_questionAnswers[_questionIndex]['options'] as List)
-                      .map((answer) {
-                    return Answer(answer, setCurrentQuestionIndex);
-                  })
-                ],
-              )
+            ? Quiz(_questionIndex, _questionAnswers, setCurrentQuestionIndex)
             : Center(
                 child: Text('all qustions are completed'),
               ),
